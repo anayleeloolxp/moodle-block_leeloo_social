@@ -61,13 +61,40 @@ class block_leeloo_social extends block_base {
      */
     public function get_content() {
 
-        global $CFG;
-        global $SESSION;
-        $jsessionid = $SESSION->jsession_id;
-
         if ($this->content !== null) {
             return $this->content;
         }
+
+        $leeloolxplicense = get_config('block_leeloo_social')->license;
+
+        $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
+        $postdata = '&license_key=' . $leeloolxplicense;
+
+        $curl = new curl;
+
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($postdata),
+        );
+
+        if (!$output = $curl->post($url, $postdata, $options)) {
+            $this->content->text = get_string('nolicense', 'block_leeloo_social');
+            return $this->content;
+        }
+
+        $infoleeloolxp = json_decode($output);
+
+        if ($infoleeloolxp->status != 'false') {
+            $leeloolxpurl = $infoleeloolxp->data->install_url;
+        } else {
+            $this->content->text = get_string('nolicense', 'block_leeloo_social');
+            return $this->content;
+        }
+
+        global $CFG;
+        global $SESSION;
+        $jsessionid = $SESSION->jsession_id;
         
         $this->title = get_string('displayname', 'block_leeloo_social');
 
@@ -88,7 +115,7 @@ class block_leeloo_social extends block_base {
      * @return boolean
      */
     public function has_config() {
-        return false;
+        return true;
     }
 
     /**
