@@ -101,7 +101,7 @@ class block_leeloo_social extends block_base {
         if($jsessionid){
             $this->content->text = '<iframe src="https://leeloolxp.com/es-frame?session_id='.$jsessionid.'" class="leeloosocial"></iframe>';
         }else{
-            $this->content->text = '';
+            $this->content->text = get_string('notloggedinsso', 'block_leeloo_social');
         }
 
         $this->content->footer = '';

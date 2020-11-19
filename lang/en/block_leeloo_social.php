@@ -36,5 +36,6 @@ $string['buy'] = 'Buy';
 
 $string['nolicense'] = 'Invalid Leeloo LXP License ID';
 $string['license'] = 'Leeloo LXP License ID';
+$string['notloggedinsso'] = 'Not logged in by SSO';
 
 $string['privacy:metadata'] = 'The Leeloo LXP Social (leeloo_social) block only shows information about courses and does not store data itself.';
