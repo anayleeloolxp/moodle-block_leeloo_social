@@ -99,7 +99,7 @@ class block_leeloo_social extends block_base {
         $this->title = get_string('displayname', 'block_leeloo_social');
 
         if($jsessionid){
-            $this->content->text = '<iframe src="https://leeloolxp.com/es-frame?session_id='.$jsessionid.'" class="leeloosocial"></iframe>';
+            $this->content->text = '<iframe src="https://leeloolxp.com/es-frame?session_id='.$jsessionid.'&leeloolxplicense='.$leeloolxplicense.'" class="leeloosocial"></iframe>';
         }else{
             $this->content->text = get_string('notloggedinsso', 'block_leeloo_social');
         }
