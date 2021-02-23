@@ -31,5 +31,5 @@ $plugin->component = 'block_leeloo_social'; // Full name of the plugin (used for
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = 'v1.6.0';
 $plugin->dependencies = array(
-    'auth_leeloo_pay_sso' => 2020022105
+    'auth_leeloo_pay_sso' => 2020022105,
 );

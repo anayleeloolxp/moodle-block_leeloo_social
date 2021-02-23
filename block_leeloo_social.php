@@ -68,7 +68,9 @@ class block_leeloo_social extends block_base {
         $leeloolxplicense = get_config('block_leeloo_social')->license;
 
         $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
-        $postdata = '&license_key=' . $leeloolxplicense;
+        $postdata = [
+            'license_key' => $leeloolxplicense,
+        ];
 
         $curl = new curl;
 
@@ -77,6 +79,8 @@ class block_leeloo_social extends block_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
         );
+
+        $this->content = new stdClass();
 
         if (!$output = $curl->post($url, $postdata, $options)) {
             $this->content->text = get_string('nolicense', 'block_leeloo_social');
@@ -94,13 +98,14 @@ class block_leeloo_social extends block_base {
 
         global $CFG;
         global $SESSION;
-        $jsessionid = $SESSION->jsession_id;
-        
+        @$jsessionid = $SESSION->jsession_id;
+
         $this->title = get_string('displayname', 'block_leeloo_social');
 
-        if($jsessionid){
-            $this->content->text = '<iframe src="https://leeloolxp.com/es-frame?session_id='.$jsessionid.'&leeloolxplicense='.$leeloolxplicense.'" class="leeloosocial"></iframe>';
-        }else{
+        if ($jsessionid) {
+            $frameurl = 'https://leeloolxp.com/es-frame?session_id=' . $jsessionid . '&leeloolxplicense=' . $leeloolxplicense;
+            $this->content->text = '<iframe src="' . $frameurl . '" class="leeloosocial"></iframe>';
+        } else {
             $this->content->text = get_string('notloggedinsso', 'block_leeloo_social');
         }
 
