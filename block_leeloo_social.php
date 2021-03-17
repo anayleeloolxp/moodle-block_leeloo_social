@@ -65,6 +65,13 @@ class block_leeloo_social extends block_base {
             return $this->content;
         }
 
+        $this->content = new stdClass();
+
+        if (!isset(get_config('block_leeloo_social')->license)) {
+            $this->content->text = get_string('nolicense', 'block_leeloo_social');
+            return $this->content;
+        }
+
         $leeloolxplicense = get_config('block_leeloo_social')->license;
 
         $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
@@ -79,8 +86,6 @@ class block_leeloo_social extends block_base {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($postdata),
         );
-
-        $this->content = new stdClass();
 
         if (!$output = $curl->post($url, $postdata, $options)) {
             $this->content->text = get_string('nolicense', 'block_leeloo_social');
