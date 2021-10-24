@@ -65,6 +65,9 @@ class block_leeloo_social extends block_base {
             return $this->content;
         }
 
+        global $CFG;
+        require_once($CFG->dirroot . '/lib/filelib.php');
+
         $this->content = new stdClass();
 
         if (!isset(get_config('block_leeloo_social')->license)) {
